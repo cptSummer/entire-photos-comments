@@ -1,9 +1,10 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import {Author} from "../dto/author/author";
 
 export interface IComment extends Document {
-    authorId: number;
-    content: string;
+    text: string;
     createdAt: Date;
+    author: Author;
     photoId: number;
 }
 

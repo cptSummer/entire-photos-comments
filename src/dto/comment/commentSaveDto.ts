@@ -4,7 +4,7 @@ export class CommentSaveDto {
 
   text?: string;
   author?: Author;
-  photoId?: string;
+  photoId?: number;
 
   constructor(data: Partial<CommentSaveDto>) {
     this.text = data.text;
