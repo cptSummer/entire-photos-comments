@@ -14,9 +14,11 @@ import {CommentQueryDto} from "../../dto/comment/commentQueryDto";
 export const addComment = async (req: Request, res: Response) => {
   const comment = new CommentSaveDto(req.body);
   try {
-    const result = createCommentApi(comment);
-    res.send({
-      result,
+    const id = await createCommentApi({
+      ...comment,
+    });
+    res.status(httpStatus.CREATED).send({
+      id,
     });
   } catch (err) {
     const {message, status} = new InternalError(err);
@@ -28,11 +30,12 @@ export const addComment = async (req: Request, res: Response) => {
 export const getComments = async (req: Request, res: Response) => {
   try {
     const query = new CommentQueryDto(req.body);
+
     if (!query.photoId) {
       res.status(httpStatus.BAD_REQUEST).send();
       return;
     }
-    const result = await getCommentsApi(query.photoId, query.limit, query.skip);
+    const result = await getCommentsApi(query.photoId, query.size, query.from);
     res.send({
       result,
     });
@@ -45,7 +48,7 @@ export const getComments = async (req: Request, res: Response) => {
 
 export const getCommentsCount = async (req: Request, res: Response) => {
   try {
-    const photoIds: number[] = req.body.photoIds;
+    const photoIds: number[] = Array.isArray(JSON.parse(req.body.photoIds)) ? JSON.parse(req.body.photoIds) : [JSON.parse(req.body.photoIds)];
     const result = await getCommentsCountApi(photoIds);
     res.send({
       result,

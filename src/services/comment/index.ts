@@ -8,7 +8,7 @@ export const createComment = async (
 ): Promise<string> => {
   await validateComment(commentDto);
 
-  const comment = await Comment.create(commentDto);
+  const comment = await new Comment(commentDto).save();
   return comment._id;
 };
 
@@ -80,5 +80,5 @@ const checkPhotoExists = async (photoId: number): Promise<boolean> => {
 
   const photoUrl = `http://localhost:8080/api/photos/${photoId}`;
   const response = await axios.get(photoUrl);
-  return response.status === 200;
+  return response.data !== '';
 };

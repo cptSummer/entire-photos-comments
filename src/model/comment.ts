@@ -9,19 +9,14 @@ export interface IComment extends Document {
 }
 
 const commentSchema = new Schema({
-  authorId: {
+  author: {
     required: true,
-    type: Number,
+    type: Object,
   },
 
-  content: {
+  text: {
     required: true,
     type: String,
-  },
-
-  createdAt: {
-    required: true,
-    type: Date,
   },
 
   photoId: {
@@ -38,6 +33,6 @@ const commentSchema = new Schema({
   timezone: 'UTC',
 },);
 
-const Comment = mongoose.model<IComment>('Comment', commentSchema);
+const Comment = mongoose.model<IComment>('comment', commentSchema);
 
 export default Comment;

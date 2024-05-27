@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post("", addComment);
 router.get("", getComments);
-router.get("/_counts", getCommentsCount);
+router.post("/_counts", getCommentsCount);
 
 export default router;
