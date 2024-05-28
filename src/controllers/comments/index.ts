@@ -5,9 +5,9 @@ import {
   createComment as createCommentApi,
   getCommentsByPhotoIdSortedByDate as getCommentsApi,
   getAllCommentsCountWithPhotoId as getCommentsCountApi,
-} from 'src/services/comment';
-import {CommentSaveDto} from 'src/dto/comment/commentSaveDto';
-import {InternalError} from 'src/system/internalError';
+} from '../../services/comment';
+import {CommentSaveDto} from '../../dto/comment/commentSaveDto';
+import {InternalError} from '../../system/internalError';
 import {CommentQueryDto} from "../../dto/comment/commentQueryDto";
 
 
@@ -30,7 +30,6 @@ export const addComment = async (req: Request, res: Response) => {
 export const getComments = async (req: Request, res: Response) => {
   try {
     const query = new CommentQueryDto(req.body);
-
     if (!query.photoId) {
       res.status(httpStatus.BAD_REQUEST).send();
       return;

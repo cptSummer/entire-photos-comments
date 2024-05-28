@@ -10,7 +10,7 @@ export class CommentQueryDto extends QueryDto {
       this.text = query.text;
       this.photoId = query.photoId;
       this.from = query.from || 0;
-      this.size = query.from || 10;
+      this.size = query.size || 10;
     }
   }
 }

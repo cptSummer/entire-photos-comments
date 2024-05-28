@@ -25,6 +25,7 @@ export const getCommentsByPhotoIdSortedByDate = async (
   return comments ? toDetailsDtoList(comments) : null;
 };
 
+
 const toDetailsDtoList = (comments: IComment[]): CommentDetailsDto[] => {
   return comments.map(comment => toDetailsDto(comment));
 };
@@ -59,8 +60,9 @@ export const getAllCommentsCountWithPhotoId = async (
     },
   ]);
 
+
   return photoIds.reduce((acc, id) => {
-    acc[id] = result.find(r => r.photoId === id)?.count || 0;
+    acc[id] =  Array.from(result).find(r => r.photoId === id)?.count || 0;
     return acc;
   }, {} as Record<number, number>);
 };
@@ -76,9 +78,10 @@ export const validateComment = async (commentDto: CommentSaveDto) => {
   }
 };
 
-const checkPhotoExists = async (photoId: number): Promise<boolean> => {
-
+export const checkPhotoExists = async (photoId: number): Promise<boolean> => {
   const photoUrl = `http://localhost:8080/api/photos/${photoId}`;
   const response = await axios.get(photoUrl);
   return response.data !== '';
 };
+
+
